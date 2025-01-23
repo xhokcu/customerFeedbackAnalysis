@@ -1,6 +1,12 @@
 export interface FeedbackItem {
   feedback: string;
-  sentiment: 'POSITIVE' | 'NEGATIVE' | 'NEUTRAL';
+  sentiment:
+    | 'POSITIVE'
+    | 'NEGATIVE'
+    | 'NEUTRAL'
+    | 'positive'
+    | 'negative'
+    | 'neutral';
   score: number;
 }
 

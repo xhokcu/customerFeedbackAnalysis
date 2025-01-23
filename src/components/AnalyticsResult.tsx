@@ -12,7 +12,14 @@ interface AnalyticsResultProps {
 const AnalyticsResult: React.FC<AnalyticsResultProps> = ({ data }) => {
   const sentimentCounts = data.reduce(
     (acc, item) => {
-      acc[item.sentiment]++;
+      const sentiment = item.sentiment ? item.sentiment.toUpperCase() : ''; // Kontrol ekledik
+      if (sentiment === 'POS') {
+        acc.POSITIVE += 1;
+      } else if (sentiment === 'NEG') {
+        acc.NEGATIVE += 1;
+      } else if (sentiment === 'NEU') {
+        acc.NEUTRAL += 1;
+      }
       return acc;
     },
     { POSITIVE: 0, NEGATIVE: 0, NEUTRAL: 0 },

@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.REACT_APP_PROD_SERVER_URL;
 
 export const uploadFile = async (formData: FormData) => {
   try {
@@ -6,6 +6,8 @@ export const uploadFile = async (formData: FormData) => {
       method: 'POST',
       body: formData,
     });
+
+    console.log('helin', response.body);
 
     if (!response.ok) {
       throw new Error('Upload failed');
