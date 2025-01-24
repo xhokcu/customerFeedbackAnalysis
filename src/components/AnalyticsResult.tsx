@@ -1,9 +1,24 @@
 import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from 'chart.js';
+import { Pie, Bar } from 'react-chartjs-2';
 import { FeedbackItem } from '../types';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+);
 
 interface AnalyticsResultProps {
   data: FeedbackItem[];
@@ -34,8 +49,8 @@ const AnalyticsResult: React.FC<AnalyticsResultProps> = ({ data }) => {
           sentimentCounts.NEGATIVE,
           sentimentCounts.NEUTRAL,
         ],
-        backgroundColor: ['#4CAF50', '#f44336', '#2196F3'],
-        hoverBackgroundColor: ['#45a049', '#da190b', '#1976D2'],
+        backgroundColor: ['#7FB77E', '#BB423F', '#7C9CBF'],
+        hoverBackgroundColor: ['#6da36c', '#a33936', '#6a89ac'],
       },
     ],
   };
@@ -57,13 +72,52 @@ const AnalyticsResult: React.FC<AnalyticsResultProps> = ({ data }) => {
         },
       },
     },
+    maintainAspectRatio: false,
+  };
+
+  const barChartData = {
+    labels: ['Positive', 'Negative', 'Neutral'],
+    datasets: [
+      {
+        label: 'Sentiment Distribution',
+        data: [
+          sentimentCounts.POSITIVE,
+          sentimentCounts.NEGATIVE,
+          sentimentCounts.NEUTRAL,
+        ],
+        backgroundColor: ['#7FB77E', '#BB423F', '#7C9CBF'],
+      },
+    ],
+  };
+
+  const barChartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
   };
 
   return (
     <div className="analytics-result">
       <h2>Sentiment Analysis Results</h2>
-      <div className="chart-container">
-        <Pie data={chartData} options={options} />
+      <div className="charts-row">
+        <div className="chart-container">
+          <Pie data={chartData} options={options} />
+        </div>
+        <div className="chart-container">
+          <Bar data={barChartData} options={barChartOptions} />
+        </div>
       </div>
       <div className="sentiment-summary">
         <p>Total Feedbacks: {data.length}</p>

@@ -7,8 +7,6 @@ export const uploadFile = async (formData: FormData) => {
       body: formData,
     });
 
-    console.log('helin', response.body);
-
     if (!response.ok) {
       throw new Error('Upload failed');
     }
